@@ -50,8 +50,43 @@ def edit_by_id(number: str, directory):
     else:
         print(f'Такой {ID} отсутствует в справочнике. Возврат в меню...')
 
-        
+def delete_by_id(number: str, directory):
+    # Удаление строки справочника без сохранения в файл
+    if number.isdigit() and (id_ := int(number)) <= len(directory):
+        print(*(f"{k}: {v<16}" for k, v in directory[id_ -1].items()))
+        answer = input('Подтверждаете удаление (y/n): ')
+        if answer in {'y', 'yes', 'да'}:
+            directory.pop(id_ - 1)
+            print('Запись удалена')
+    else:
+        print(f'Такой {ID} отсутствует в справочнике. Возврат в меню...')
 
+def edit_by_last_name(directory):
+    # Запрос фамилии и переименование всех однофамильцев
+    old_value = input('Какую фамилию найти: ').strip().capitalize()
+    new_value = input('На какую фамилию заменить: ').strip().capitalize()
+    for item in directory:
+        if item[LAST_NAME] == old_value:
+            item[LAST_NAME] = new_value
+
+
+def delete_by_first_name(directory):
+    # Запрос имени и удаление по первому совпадению
+    value = input('Какое имя удалить: ').strip().capitalize()
+    for item in directory:
+        if item[FIRST_NAME] == value:
+            # Будут большие проблемы при многократном изменении списка на лету!!!
+            directory.remove(item)
+            break
+
+
+def copy_line(number, directory):
+    # Копирование строки number в файл new_dir.txt
+    if number.isdigit() and (id_ := int(number)) <= len(directory):
+        print(*(f"{k}: {v<16}" for k, v in directory[id_ -1].items()))
+        save_directory([directory[id_ -1]], file_name='new_dir.txt')
+    else:
+        print(f'Такой {ID} отсутствует в справочнике. Возврат в меню...') 
 
 
 def save_directory(directory: list[dict[str, str]], file_name=FILE_NAME):
@@ -59,6 +94,7 @@ def save_directory(directory: list[dict[str, str]], file_name=FILE_NAME):
     with open(file_name, 'w', encoding='utf-8') as file:
         for item in directory:
             file.write(' '.join(f'{value}' for key, value in item.items() if key != ID) + '\n')
+
 
 def main(directory):
     # Цикл событий основного меню
@@ -108,8 +144,6 @@ def main(directory):
             break
         else:
             print('Неверная команда!')
-
-
 
 
 if __name__ == '__main__':
