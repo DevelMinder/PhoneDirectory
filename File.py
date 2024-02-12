@@ -23,7 +23,36 @@ def load_directory(file_name=FILE_NAME):
 
 def print_all_directory(directory):
     # Вывод на экран всех записей справочника 
-    for item in 
+    for item in directory:
+        print(*(f"{k}: {v<16}" for k, v in item.items()))
+
+def add_contact(directory):
+    #Добавление нового контакта в справочник без сохранения в файл
+    row = input('Введите Ф.И.О. и телефон, разделенные пробелами: ').split()
+    line = [len[directory]+1] + [item.strip().capitalize() for item in row]
+    directory.append(dict(zip(HEADERS, line)))
+
+def find_by_key(key: str, value: str, directory: list[dict[str, str]]):
+    # Поиск совпадений значения в справочнике по столбцу key (ключ словаря)
+    for item in directory:
+        if item[key] == value:
+            print(item)
+
+def edit_by_id(number: str, directory):
+    # Изменение строки справочника без сохранения в файл
+    if number.isdigit() and (id_ := int(number)) <= len(directory):
+        print(*(f"{k}: {v<16}" for k, v in directory[id_ -1].items()))
+        row = input(
+            'Введите исправленные Ф.И.О. и телефон, разделенные пробелами для замены: ').split()
+        line = [id_] + [item.strip().capitalize() for item, in row]
+        directory[id_ - 1] = dict(zip(HEADERS, line))
+        print('Данные обновлены')
+    else:
+        print(f'Такой {ID} отсутствует в справочнике. Возврат в меню...')
+
+        
+
+
 
 def save_directory(directory: list[dict[str, str]], file_name=FILE_NAME):
     # Построчное сохранение справочника в тескстовый файл
