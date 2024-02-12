@@ -25,6 +25,11 @@ def print_all_directory(directory):
     # Вывод на экран всех записей справочника 
     for item in 
 
+def save_directory(directory: list[dict[str, str]], file_name=FILE_NAME):
+    # Построчное сохранение справочника в тескстовый файл
+    with open(file_name, 'w', encoding='utf-8') as file:
+        for item in directory:
+            file.write(' '.join(f'{value}' for key, value in item.items() if key != ID) + '\n')
 
 def main(directory):
     # Цикл событий основного меню
@@ -56,7 +61,27 @@ def main(directory):
                         value=input(
                             f'{FIRST_NAME.title()}: ').strip().capitalize(),
                         directory=directory)
-        
+        elif x == '5':
+            edit_by_id(number=input(f'Введжите {ID}, который хотите изменить: '),
+                       directory=directory)
+        elif x == '6':
+            delete_by_id(number=input(f'Введжите {ID}, который хотите удалить: '),
+                       directory=directory)
+        elif x == '7':
+            edit_by_last_name(directory=directory)
+        elif x == '8':
+            delete_by_first_name(directory=directory)
+        elif x == '9':
+            copy_line(number=input(f'Введите {ID}, который хотите скопировать в отдельный файл: '),
+                      directory=directory)
+        elif x == '0':
+            save_directory(directory)
+            break
+        else:
+            print('Неверная команда!')
+
+
+
 
 if __name__ == '__main__':
     main(load_directory()) 
