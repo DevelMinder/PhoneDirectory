@@ -44,7 +44,7 @@ def edit_by_id(number: str, directory):
         print(*(f"{k}: {v:<16}" for k, v in directory[id_ - 1].items()))
         row = input(
             'Введите исправленные Ф.И.О. и телефон, разделенные пробелами для замены: ').split()
-        line = [id_] + [item.strip().capitalize() for item, in row]
+        line = [id_] + [item.strip().capitalize() for item in row]
         directory[id_ - 1] = dict(zip(HEADERS, line))
         print('Данные обновлены')
     else:
